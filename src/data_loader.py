@@ -4,7 +4,7 @@ import pandas as pd
 
 
 
-def load_data(source: str = "library", path: str = None) -> pd.DataFrame:
+def load_data(source: str = "library", path: str = None):
     """
     Load UCI Heart Disease Cleveland dataset.
 
@@ -23,15 +23,18 @@ def load_data(source: str = "library", path: str = None) -> pd.DataFrame:
             # Heart Disease dataset ID in UCI ML repo is 45
             heart_disease = fetch_ucirepo(id=45)
             heart_disease.data.original = heart_disease.data.original.rename(columns={'num':'target'})
-            df = heart_disease.data.original    
+            df = heart_disease.data.original
+            return df    
 
         except ImportError:
             raise ImportError("ucimlrepo not installed. Run pip install ucimlrepo")
 
     elif source == "raw":
         print("Loading from raw CSV files is not implemented. Set source=library")
+        return None
 
-    return df
+    else:
+        raise ValueError("Invalid source. Use 'library' or 'raw'.")
 
 
 if __name__ == "__main__":
