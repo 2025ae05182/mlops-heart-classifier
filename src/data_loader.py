@@ -1,11 +1,11 @@
 
-import os
 import pandas as pd
-from typing import Optional
+import logging
+
+logging.basicConfig(level=logging.INFO)
 
 
-
-def load_data(source: str = "library", path: Optional[str] = None):
+def load_data() -> pd.DataFrame | None:
     """
     Load UCI Heart Disease Cleveland dataset.
 
@@ -16,33 +16,37 @@ def load_data(source: str = "library", path: Optional[str] = None):
             - "path": Path to raw CSV file (required if source="raw")
 
     Returns:
-        pd.DataFrame: Loaded dataset
+        pd.DataFrame if successful, else None
     """
-    if source == "library":
-        try:
-            from ucimlrepo import fetch_ucirepo
-            # Heart Disease dataset ID in UCI ML repo is 45
-            heart_disease = fetch_ucirepo(id=45)
-            heart_disease.data.original = heart_disease.data.original.rename(columns={'num':'target'})
-            df = heart_disease.data.original
-            return df    
+    try:
+        from ucimlrepo import fetch_ucirepo
+        # Heart Disease dataset ID in UCI ML repo is 45
+        heart_disease = fetch_ucirepo(id=45)
 
-        except ImportError:
-            raise ImportError("ucimlrepo not installed. Run pip install ucimlrepo")
-
-    elif source == "raw":
-        print("Loading from raw CSV files is not implemented. Set source=library")
+        if heart_disease.data.original.empty:
+            logging.info("Dataset is empty. Loading failed")
+            return None
+        else:
+            if "num" in heart_disease.data.original.columns:
+                heart_disease.data.original = heart_disease.data.original.rename(columns={'num':'target'})
+                df = heart_disease.data.original
+                logging.info("Heart Disease dataset loaded")
+                return df
+    
+    except ImportError:
+        logging.error("ucimlrepo not installed. Run pip install ucimlrepo ")
         return None
 
-    else:
-        raise ValueError("Invalid source. Use 'library' or 'raw'.")
+    except Exception as e:
+        logging.error("Unexpected error while loading dataset: {e}")
+        return None
 
 
 if __name__ == "__main__":
     # Example usage:
-    # Option 1: Load via library
-    df = load_data(source="library")
-    if df != None:
+    # call load_data()
+    df = load_data()
+    if df is not None:
         print(df.head())
     else:
-        print("Only 'library' as a source is implemented. Other techniques are not implemented")
+        print("Dataset could not be loaded. Check logs for errors")
