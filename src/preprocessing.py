@@ -4,13 +4,16 @@ import numpy as np
 from sklearn.preprocessing import StandardScaler
 
 def data_check_numeric(df: pd.DataFrame) -> pd.DataFrame | None:
-    # Check if all columns are numeric
-    if not all(pd.api.types.is_numeric_dtype(dtype) for dtype in df.dtypes):
-        logging.info("Found non-numeric columns. Not expected in ucimlrepo")
+    # Try converting all columns to numeric
+    df_numeric = df.apply(pd.to_numeric, errors="coerce")
+
+    # If any NaN introduced, data is invalid
+    if df_numeric.isnull().any().any():
+        logging.error("Found non-numeric values in DataFrame")
         return None
-    else:
-        logging.info("Loaded dataset has only numerical data. No further processing implemented")
-        return df
+
+    logging.info("Loaded dataset has only numerical data")
+    return df
 
 def data_scaling(feature: pd.Series, transform: str = None) -> pd.Series:
     # Make sure it's a Series
@@ -40,6 +43,7 @@ def data_preprocessing(df: pd.DataFrame) -> pd.DataFrame | None:
         return df_clean
     else:
         logging.error("Invalid data")
+        print("Invalid data .. force error")
         return None
     
 
