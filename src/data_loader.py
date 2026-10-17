@@ -10,10 +10,7 @@ def load_data() -> pd.DataFrame | None:
     Load UCI Heart Disease Cleveland dataset.
 
     Args:
-        source (str): "library" or "raw"
-            - "library": load using ucimlrepo (or similar library)
-            - "raw": load from local CSV file (downloaded manually)
-            - "path": Path to raw CSV file (required if source="raw")
+        None, "Loads from UCIMLREPO, dataset=45 (Heart disease)"
 
     Returns:
         pd.DataFrame if successful, else None
@@ -30,7 +27,9 @@ def load_data() -> pd.DataFrame | None:
             if "num" in heart_disease.data.original.columns:
                 heart_disease.data.original = heart_disease.data.original.rename(columns={'num':'target'})
                 df = heart_disease.data.original
-                logging.info("Heart Disease dataset loaded")
+                logging.info(f"Heart Disease dataset loaded. Shape: {df.shape}")
+                df = df.dropna()
+                logging.info(f"Heart Disease dataset cleaned. Shape: {df.shape}")
                 return df
     
     except ImportError:
@@ -40,6 +39,8 @@ def load_data() -> pd.DataFrame | None:
     except Exception as e:
         logging.error("Unexpected error while loading dataset: {e}")
         return None
+
+
 
 
 if __name__ == "__main__":
