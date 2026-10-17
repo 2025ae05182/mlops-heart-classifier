@@ -29,7 +29,7 @@ def load_data() -> pd.DataFrame | None:
                 df = heart_disease.data.original
                 logging.info(f"Heart Disease dataset loaded. Shape: {df.shape}")
                 df = df.dropna()
-                logging.info(f"Heart Disease dataset cleaned. Shape: {df.shape}")
+                logging.info(f"Rows with missing values removed. Shape: {df.shape}")
                 return df
     
     except ImportError:
@@ -41,24 +41,14 @@ def load_data() -> pd.DataFrame | None:
         return None
 
 
-def data_preprocessing(df: pd.DataFrame) -> pd.DataFrame | None:
-    # Check if all columns are numeric
-    if not all(pd.api.types.is_numeric_dtype(dtype) for dtype in df.dtypes):
-        logging.info("Found non-numeric columns. Not expected in ucimlrepo")
-        return None
-    else:
-        logging.info("Loaded dataset has only numerical data. No further processing implemented")
-        return df
+
 
 if __name__ == "__main__":
     # Example usage:
     # call load_data()
     df = load_data()
     if df is not None:
-        df = data_preprocessing(df=df)
-        if df is not None:
-            print(df.info())
-        else:
-            print("Dataset could not be cleaned. Check logs for errors")
+        print("Dataset successfully loaded")
     else:
-        print("Dataset could not be loaded. Check logs for errors")
+        print("Dataset could not be cleaned. Check logs for errors")
+
