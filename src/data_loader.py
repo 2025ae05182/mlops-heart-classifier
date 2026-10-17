@@ -37,17 +37,28 @@ def load_data() -> pd.DataFrame | None:
         return None
 
     except Exception as e:
-        logging.error("Unexpected error while loading dataset: {e}")
+        logging.error(f"Unexpected error while loading dataset: {e}")
         return None
 
 
-
+def data_preprocessing(df: pd.DataFrame) -> pd.DataFrame | None:
+    # Check if all columns are numeric
+    if not all(pd.api.types.is_numeric_dtype(dtype) for dtype in df.dtypes):
+        logging.info("Found non-numeric columns. Not expected in ucimlrepo")
+        return None
+    else:
+        logging.info("Loaded dataset has only numerical data. No further processing implemented")
+        return df
 
 if __name__ == "__main__":
     # Example usage:
     # call load_data()
     df = load_data()
     if df is not None:
-        print(df.head())
+        df = data_preprocessing(df=df)
+        if df is not None:
+            print(df.info())
+        else:
+            print("Dataset could not be cleaned. Check logs for errors")
     else:
         print("Dataset could not be loaded. Check logs for errors")
