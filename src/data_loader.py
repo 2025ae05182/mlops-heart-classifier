@@ -1,10 +1,11 @@
 
 import os
 import pandas as pd
+from typing import Optional
 
 
 
-def load_data(source: str = "library", path: str = None):
+def load_data(source: str = "library", path: Optional[str] = None):
     """
     Load UCI Heart Disease Cleveland dataset.
 
@@ -41,4 +42,7 @@ if __name__ == "__main__":
     # Example usage:
     # Option 1: Load via library
     df = load_data(source="library")
-    print(df.head())
+    if df != None:
+        print(df.head())
+    else:
+        print("Only 'library' as a source is implemented. Other techniques are not implemented")
