@@ -28,10 +28,3 @@ def simplify_target(df_clean: pd.DataFrame) -> pd.DataFrame:
     df_clean['target_binary'] = df_clean['target'].apply(lambda x: 0 if x == 0 else 1)
     print(df_clean['target_binary'].value_counts())
     return df_clean
-
-
-if __name__ == "__main__":
-    # Example usage:
-    df = pd.DataFrame({"age": [25, 35, 45, 65, 75]})
-    df_transformed = age_to_bins(df)
-    print(df_transformed.columns.to_list())
