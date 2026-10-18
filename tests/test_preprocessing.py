@@ -22,7 +22,7 @@ def test_preprocessing_with_object_column(caplog):
     assert df_processed is None
 
     # Logging should mention categorical columns
-    assert "Found non-numeric columns" in caplog.text
+    assert "Found non-numeric values in DataFrame" in caplog.text
 
 
 def test_preprocessing_with_numeric_only(caplog):

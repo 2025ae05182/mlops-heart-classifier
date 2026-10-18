@@ -16,7 +16,7 @@ def age_to_bins(df: pd.DataFrame) -> pd.DataFrame:
     # Log distribution
     logging.info("Age bin distribution:\n%s", df_clean['age_bin'].value_counts())
 
-    age_dummies = pd.get_dummies(df_clean['age_bin'], prefix='age')
+    age_dummies = pd.get_dummies(df_clean['age_bin'], prefix='age',dtype=int)
     df_clean = pd.concat([df_clean, age_dummies], axis=1)
     logging.info("DataFrame after age binning: columns=%s, shape=%s",
                  df_clean.columns.tolist(), df_clean.shape)
