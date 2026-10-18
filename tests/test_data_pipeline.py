@@ -2,7 +2,7 @@
 import pandas as pd
 import pytest
 from src.data_pipeline import build_dataset
-from src.preprocessing import data_check_numeric
+
 def test_build_dataset_success(monkeypatch):
     # Arrange: patch load_data to return a small valid DataFrame
     sample_df = pd.DataFrame({
@@ -13,7 +13,7 @@ def test_build_dataset_success(monkeypatch):
         "target": [0, 1, 2, 1, 0]
     })
 
-    monkeypatch.setattr("src.data_loader.load_data", lambda: sample_df)
+    monkeypatch.setattr("src.data_pipeline.load_data", lambda: sample_df)
 
     # Act
     result = build_dataset()
@@ -31,18 +31,6 @@ def test_build_dataset_success(monkeypatch):
         assert set(result[col].unique()) <= {0, 1}
 
 
-import pytest
-import pandas as pd
-from src.data_pipeline import build_dataset
-
-import pytest
-import pandas as pd
-from src.data_pipeline import build_dataset
-
-import pytest
-import pandas as pd
-from src.data_pipeline import build_dataset
-
 def test_build_dataset_invalid(monkeypatch):
     bad_df = pd.DataFrame({
         "age": ["twenty", "thirty"],
@@ -51,8 +39,9 @@ def test_build_dataset_invalid(monkeypatch):
         "trestbps": ["normal", "high"],
         "target": [0, 1]
     })
-    monkeypatch.setattr("src.data_loader.load_data", lambda: bad_df)
 
+    monkeypatch.setattr("src.data_pipeline.load_data", lambda: bad_df)
+    
     with pytest.raises(ValueError) as excinfo:
         build_dataset()
 

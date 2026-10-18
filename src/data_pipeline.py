@@ -19,11 +19,12 @@ def build_dataset() -> pd.DataFrame:
     if df is None or df.empty:
         logging.error("Loaded dataset is empty or None")
         raise ValueError("No data loaded")
-
+    
     logging.info("Data loaded successfully: shape=%s", df.shape)
 
     # Step 2: Preprocess
     df = data_preprocessing(df)
+    
     if df is None:
         logging.error("Preprocessing failed: non-numeric data detected")
         raise ValueError("Preprocessing returned None due to invalid data")
