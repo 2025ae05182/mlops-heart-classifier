@@ -190,7 +190,7 @@ def random_forest_tuning(
 
 
 if __name__ == "__main__":
-    experiment_name = experiment_name = "heart-disease-model-selection"
+    experiment_name = "heart-disease-model-selection"
     setup_mlflow(experiment_name)
     logging.info("Starting data pipeline...")
     df = build_dataset()

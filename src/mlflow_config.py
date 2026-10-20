@@ -10,7 +10,7 @@ def setup_mlflow(experiment_name: str):
     """
 
     # Project-level tracking folder
-    tracking_dir = os.path.abspath("../mlflow_tracking")
+    tracking_dir = os.path.abspath("./mlflow_tracking")
 
     # Ensure folder exists
     os.makedirs(tracking_dir, exist_ok=True)
@@ -32,5 +32,8 @@ def setup_mlflow(experiment_name: str):
     # Set experiment for current run context
     mlflow.set_experiment(experiment_name)
 
-    print(f"MLflow tracking set to: {tracking_dir}")
-    print(f"Experiment: {experiment_name}")
+    import logging
+    logging.info(f"MLflow tracking set to: {tracking_dir}")
+    logging.info(f"Experiment: {experiment_name}")
+
+    logging.info(f"Tracking URI: {mlflow.get_tracking_uri()}")
