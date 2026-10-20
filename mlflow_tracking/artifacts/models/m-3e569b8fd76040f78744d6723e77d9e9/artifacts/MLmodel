@@ -1,0 +1,24 @@
+artifact_path: file:///d:/Bits-lab/mlops-heart-classifier/mlflow_tracking/artifacts/models/m-3e569b8fd76040f78744d6723e77d9e9/artifacts
+flavors:
+  python_function:
+    env:
+      conda: conda.yaml
+      virtualenv: python_env.yaml
+    loader_module: mlflow.sklearn
+    model_path: model.skops
+    predict_fn: predict
+    python_version: 3.14.0
+  sklearn:
+    code: null
+    pickled_model: model.skops
+    serialization_format: skops
+    sklearn_version: 1.9.1
+    skops_trusted_types:
+    - sklearn.tree._tree.Tree
+mlflow_version: 3.17.1
+model_id: m-3e569b8fd76040f78744d6723e77d9e9
+model_size_bytes: 1979271
+model_uuid: m-3e569b8fd76040f78744d6723e77d9e9
+prompts: null
+run_id: 9ee50d270ff54e92b65171bcb2a4fbb9
+utc_time_created: '2026-10-20 07:26:05.072089'
