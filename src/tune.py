@@ -196,7 +196,7 @@ if __name__ == "__main__":
     df = build_dataset()
 
     y = df["target_binary"]
-    X = df.drop("target_binary", axis=1)
+    X = df.drop(["target", "target_binary"], axis=1)
 
     logging.info("Dataset is loaded")
     X_train, X_test, y_train, y_test = train_test_split(
